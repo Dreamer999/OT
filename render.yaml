@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: ot
+    env: node
+    plan: starter
+    buildCommand: npm install
+    startCommand: npm start
+    disk:
+      name: ot-data
+      mountPath: /opt/render/project/src/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATA_DIR
+        value: /opt/render/project/src/data
+      - key: TRANSCRIPTION_PROVIDER
+        value: mock
+      - key: ANALYSIS_PROVIDER
+        value: mock
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: ANTHROPIC_API_KEY
+        sync: false

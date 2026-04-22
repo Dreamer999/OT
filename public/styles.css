@@ -1,0 +1,85 @@
+:root {
+  --bg: #0b0b0f;
+  --panel: #15151c;
+  --panel-2: #1c1c25;
+  --border: #262633;
+  --text: #e6e6ef;
+  --muted: #8a8aa0;
+  --accent: #7c5cff;
+  --danger: #ff5c7a;
+  --ok: #46d6a5;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+body { min-height: 100vh; }
+a { color: var(--accent); text-decoration: none; }
+.hidden { display: none !important; }
+.mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+.small { font-size: 12px; }
+.prose { line-height: 1.55; white-space: pre-wrap; }
+
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 20px; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--bg); z-index: 10;
+}
+.brand { display: flex; align-items: center; gap: 8px; font-weight: 700; letter-spacing: 0.08em; }
+.brand small { color: var(--muted); font-weight: 400; letter-spacing: 0; margin-left: 6px; }
+.brand .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 12px var(--accent); }
+nav a { margin-left: 16px; color: var(--muted); }
+nav a.active { color: var(--text); }
+
+main { max-width: 960px; margin: 24px auto; padding: 0 16px; }
+.panel { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+h1 { margin: 0 0 12px; font-size: 22px; }
+h2 { margin: 20px 0 8px; font-size: 16px; color: var(--muted); }
+h3 { margin: 16px 0 6px; font-size: 14px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+.row { display: flex; align-items: center; }
+.row.between { justify-content: space-between; }
+.row.gap { gap: 10px; flex-wrap: wrap; }
+
+input[type="search"], input[type="url"], input[type="password"], input[type="text"] {
+  background: var(--panel-2); border: 1px solid var(--border); color: var(--text);
+  padding: 8px 10px; border-radius: 8px; min-width: 220px;
+}
+button, .btn-file {
+  background: var(--panel-2); color: var(--text); border: 1px solid var(--border);
+  padding: 8px 14px; border-radius: 8px; cursor: pointer; font: inherit;
+}
+button:hover { border-color: var(--accent); }
+button.primary { background: var(--accent); border-color: var(--accent); color: white; }
+button.danger { background: var(--danger); border-color: var(--danger); color: white; }
+button[disabled] { opacity: .5; cursor: not-allowed; }
+
+.recorder { margin-top: 14px; padding: 12px; border-radius: 10px; background: var(--panel-2); border: 1px dashed var(--border); }
+
+.list { margin-top: 18px; display: flex; flex-direction: column; gap: 8px; }
+.item {
+  display: grid; grid-template-columns: 1fr auto auto; gap: 12px;
+  background: var(--panel-2); border: 1px solid var(--border); border-radius: 10px;
+  padding: 12px 14px; align-items: center; cursor: pointer;
+}
+.item:hover { border-color: var(--accent); }
+.item .title { font-weight: 600; }
+.item .sub { color: var(--muted); font-size: 12px; }
+.badge { padding: 2px 8px; border-radius: 999px; font-size: 11px; border: 1px solid var(--border); color: var(--muted); }
+.badge.queued { color: #c0c0d0; }
+.badge.transcribing, .badge.analyzing { color: var(--accent); border-color: var(--accent); }
+.badge.transcribed { color: #b8ace4; }
+.badge.analyzed { color: var(--ok); border-color: var(--ok); }
+.badge.failed { color: var(--danger); border-color: var(--danger); }
+
+.field { display: block; margin-bottom: 12px; }
+.field > span { display: block; color: var(--muted); margin-bottom: 4px; font-size: 13px; }
+.hint { color: var(--muted); font-size: 13px; }
+.hint code { background: var(--panel-2); padding: 1px 5px; border-radius: 4px; }
+
+.tabs { display: flex; gap: 6px; margin-top: 18px; border-bottom: 1px solid var(--border); }
+.tabs button { background: transparent; border: 0; border-bottom: 2px solid transparent; border-radius: 0; padding: 8px 12px; color: var(--muted); }
+.tabs button.active { color: var(--text); border-color: var(--accent); }
+.tab { padding-top: 14px; }
+.back { display: inline-block; margin-bottom: 8px; }
+.meta { color: var(--muted); font-size: 13px; margin-bottom: 10px; }
+.empty { color: var(--muted); text-align: center; padding: 40px; }
+audio { width: 100%; margin: 6px 0 10px; }
+ul { padding-left: 20px; }

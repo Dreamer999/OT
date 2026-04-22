@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <meta name="theme-color" content="#0b0b0f" />
+    <title>OT — Omni-Transcribe</title>
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" href="/icons/icon-192.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="dot"></span>
+        <span>OT</span>
+        <small>omni-transcribe</small>
+      </div>
+      <nav>
+        <a href="#/" data-nav="home">Recordings</a>
+        <a href="#/settings" data-nav="settings">Settings</a>
+      </nav>
+    </header>
+
+    <main id="app"><div class="empty">Loading…</div></main>
+
+    <template id="tpl-home">
+      <section class="panel">
+        <div class="row between">
+          <h1>Recordings</h1>
+          <div class="row gap">
+            <input id="search" type="search" placeholder="Search transcripts…" />
+            <button id="btn-record" class="primary">● Record</button>
+            <label class="btn-file">
+              Upload
+              <input id="file-input" type="file" accept="audio/*" hidden />
+            </label>
+          </div>
+        </div>
+        <div id="recorder-panel" class="recorder hidden">
+          <div class="row gap">
+            <span id="rec-status">Idle</span>
+            <span id="rec-time" class="mono">00:00</span>
+            <button id="btn-stop" class="danger" disabled>Stop</button>
+            <button id="btn-cancel">Cancel</button>
+          </div>
+        </div>
+        <div id="list" class="list"></div>
+      </section>
+    </template>
+
+    <template id="tpl-detail">
+      <section class="panel">
+        <a href="#/" class="back">← Back</a>
+        <h1 id="d-title">Recording</h1>
+        <div class="meta" id="d-meta"></div>
+        <audio id="d-audio" controls preload="metadata"></audio>
+
+        <div class="tabs">
+          <button data-tab="summary" class="active">Summary</button>
+          <button data-tab="transcript">Transcript</button>
+          <button data-tab="raw">Raw</button>
+        </div>
+        <div id="tab-summary" class="tab">
+          <h3>TL;DR</h3><p id="d-summary" class="prose">—</p>
+          <h3>Action items</h3><ul id="d-actions"></ul>
+          <h3>Decisions</h3><ul id="d-decisions"></ul>
+          <div class="row gap">
+            <div><strong>Topics:</strong> <span id="d-topics"></span></div>
+            <div><strong>Sentiment:</strong> <span id="d-sentiment"></span></div>
+          </div>
+        </div>
+        <div id="tab-transcript" class="tab hidden">
+          <pre id="d-transcript" class="prose"></pre>
+        </div>
+        <div id="tab-raw" class="tab hidden">
+          <pre id="d-raw" class="mono small"></pre>
+        </div>
+      </section>
+    </template>
+
+    <template id="tpl-settings">
+      <section class="panel">
+        <h1>Settings</h1>
+        <label class="field">
+          <span>API base</span>
+          <input id="s-api" type="url" placeholder="https://your-ot-host" />
+        </label>
+        <label class="field">
+          <span>Bearer token</span>
+          <input id="s-token" type="password" placeholder="ot_…" />
+        </label>
+        <button id="s-save" class="primary">Save</button>
+        <p class="hint">
+          On first server boot the token is printed to stdout and written to
+          <code>data/initial-token.txt</code>. Paste it above.
+        </p>
+        <h2>Install on Pixel phone</h2>
+        <ol class="prose">
+          <li>Open this page in Chrome on your Pixel.</li>
+          <li>Menu → <em>Install app</em> (or <em>Add to Home screen</em>).</li>
+          <li>Finish a recording in the Google Recorder app → ⋯ → <em>Share</em> → <strong>OT</strong>.</li>
+          <li>The file lands here; transcription + analysis start automatically.</li>
+        </ol>
+      </section>
+    </template>
+
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>

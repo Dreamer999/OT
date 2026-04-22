@@ -1,0 +1,15 @@
+services:
+  ot:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - ot-data:/data
+    environment:
+      TRANSCRIPTION_PROVIDER: mock
+      ANALYSIS_PROVIDER: mock
+      # OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      # ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+    restart: unless-stopped
+volumes:
+  ot-data:
