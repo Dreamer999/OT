@@ -6,6 +6,7 @@ import { config } from './config.js';
 import { db } from './db.js';
 import { bootstrapDemoUser } from './auth.js';
 import { recordingsRouter } from './routes/recordings.js';
+import { dashboardRouter } from './routes/dashboard.js';
 import { shareRouter } from './routes/share.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -26,6 +27,7 @@ app.get('/readyz', (_req, res) => {
 });
 
 app.use('/api/recordings', recordingsRouter);
+app.use('/api/dashboard', dashboardRouter);
 app.use('/share', shareRouter);
 
 app.use(express.static(publicDir, { extensions: ['html'] }));

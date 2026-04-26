@@ -17,7 +17,8 @@
         <small>omni-transcribe</small>
       </div>
       <nav>
-        <a href="#/" data-nav="home">Recordings</a>
+        <a href="#/" data-nav="home">Dashboard</a>
+        <a href="#/recordings" data-nav="recordings">Recordings</a>
         <a href="#/settings" data-nav="settings">Settings</a>
       </nav>
     </header>
@@ -25,6 +26,100 @@
     <main id="app"><div class="empty">Loading…</div></main>
 
     <template id="tpl-home">
+      <section>
+        <div class="row between hero">
+          <div>
+            <h1>Dashboard</h1>
+            <div class="hint" id="hero-sub">Your work, captured.</div>
+          </div>
+          <div class="row gap">
+            <button id="btn-record" class="primary">● Record</button>
+            <label class="btn-file">
+              Upload
+              <input id="file-input" type="file" accept="audio/*" hidden />
+            </label>
+          </div>
+        </div>
+        <div id="recorder-panel" class="recorder hidden">
+          <div class="row gap">
+            <span id="rec-status">Idle</span>
+            <span id="rec-time" class="mono">00:00</span>
+            <button id="btn-stop" class="danger" disabled>Stop</button>
+            <button id="btn-cancel">Cancel</button>
+          </div>
+        </div>
+
+        <div class="stats">
+          <div class="stat"><div class="stat-label">Today</div><div class="stat-value" id="st-today">—</div></div>
+          <div class="stat"><div class="stat-label">This week</div><div class="stat-value" id="st-week">—</div></div>
+          <div class="stat"><div class="stat-label">This month</div><div class="stat-value" id="st-month">—</div></div>
+          <div class="stat"><div class="stat-label">Total</div><div class="stat-value" id="st-total">—</div></div>
+          <div class="stat"><div class="stat-label">Open actions</div><div class="stat-value" id="st-actions">—</div></div>
+          <div class="stat"><div class="stat-label">Captured</div><div class="stat-value" id="st-bytes">—</div></div>
+        </div>
+
+        <div class="grid-2">
+          <div class="panel">
+            <div class="row between">
+              <h2 class="panel-title">Last 14 days</h2>
+              <span class="hint" id="trend-sub"></span>
+            </div>
+            <div id="sparkline"></div>
+          </div>
+          <div class="panel">
+            <h2 class="panel-title">Top topics</h2>
+            <div id="topics" class="chips"></div>
+            <h3 style="margin-top:18px">Sentiment</h3>
+            <div id="sentiment-bar" class="senti"></div>
+            <div class="row gap" style="margin-top:6px;font-size:12px;color:var(--muted)">
+              <span><span class="dot ok"></span> positive <span id="se-pos">0</span></span>
+              <span><span class="dot mu"></span> neutral <span id="se-neu">0</span></span>
+              <span><span class="dot da"></span> negative <span id="se-neg">0</span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="row between">
+            <h2 class="panel-title">Open action items</h2>
+            <span class="hint">Checked items are stored locally; future versions sync to Google Sheets / Notion.</span>
+          </div>
+          <ul id="actions-list" class="actions"></ul>
+        </div>
+
+        <div class="grid-2">
+          <div class="panel">
+            <div class="row between">
+              <h2 class="panel-title">Recent recordings</h2>
+              <a href="#/recordings" class="hint">View all →</a>
+            </div>
+            <div id="recent" class="list compact"></div>
+          </div>
+          <div class="panel">
+            <h2 class="panel-title">Connections <span class="tag">soon</span></h2>
+            <p class="hint">Sync action items + decisions to your tools.</p>
+            <div class="conn">
+              <div class="conn-row">
+                <div>
+                  <div class="conn-name">Google Sheets</div>
+                  <div class="hint">Append a row per action item to a tracker sheet.</div>
+                </div>
+                <button class="conn-btn" disabled>Connect</button>
+              </div>
+              <div class="conn-row">
+                <div>
+                  <div class="conn-name">Notion</div>
+                  <div class="hint">Push decisions + summaries into a database.</div>
+                </div>
+                <button class="conn-btn" disabled>Connect</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </template>
+
+    <template id="tpl-recordings">
       <section class="panel">
         <div class="row between">
           <h1>Recordings</h1>
