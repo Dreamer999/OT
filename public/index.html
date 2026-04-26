@@ -29,71 +29,59 @@
       <section>
         <div class="row between hero">
           <div>
-            <h1>Dashboard</h1>
-            <div class="hint" id="hero-sub">Your work, captured.</div>
+            <h1>Dashboard <span class="tag">preview</span></h1>
+            <div class="hint" id="hero-sub">Public preview · no real data · skeleton UI</div>
           </div>
-          <div class="row gap">
-            <button id="btn-record" class="primary">● Record</button>
-            <label class="btn-file">
-              Upload
-              <input id="file-input" type="file" accept="audio/*" hidden />
-            </label>
-          </div>
-        </div>
-        <div id="recorder-panel" class="recorder hidden">
-          <div class="row gap">
-            <span id="rec-status">Idle</span>
-            <span id="rec-time" class="mono">00:00</span>
-            <button id="btn-stop" class="danger" disabled>Stop</button>
-            <button id="btn-cancel">Cancel</button>
-          </div>
+          <form id="pw-form" class="pw">
+            <input id="pw-input" type="password" placeholder="Enter test password" autocomplete="off" />
+            <button type="submit" class="primary">Unlock</button>
+          </form>
         </div>
 
         <div class="stats">
-          <div class="stat"><div class="stat-label">Today</div><div class="stat-value" id="st-today">—</div></div>
-          <div class="stat"><div class="stat-label">This week</div><div class="stat-value" id="st-week">—</div></div>
-          <div class="stat"><div class="stat-label">This month</div><div class="stat-value" id="st-month">—</div></div>
-          <div class="stat"><div class="stat-label">Total</div><div class="stat-value" id="st-total">—</div></div>
-          <div class="stat"><div class="stat-label">Open actions</div><div class="stat-value" id="st-actions">—</div></div>
-          <div class="stat"><div class="stat-label">Captured</div><div class="stat-value" id="st-bytes">—</div></div>
+          <div class="stat skeleton"><div class="stat-label">Today</div><div class="stat-value">—</div></div>
+          <div class="stat skeleton"><div class="stat-label">This week</div><div class="stat-value">—</div></div>
+          <div class="stat skeleton"><div class="stat-label">This month</div><div class="stat-value">—</div></div>
+          <div class="stat skeleton"><div class="stat-label">Total</div><div class="stat-value">—</div></div>
+          <div class="stat skeleton"><div class="stat-label">Open actions</div><div class="stat-value">—</div></div>
+          <div class="stat skeleton"><div class="stat-label">Captured</div><div class="stat-value">—</div></div>
         </div>
 
         <div class="grid-2">
-          <div class="panel">
-            <div class="row between">
-              <h2 class="panel-title">Last 14 days</h2>
-              <span class="hint" id="trend-sub"></span>
-            </div>
-            <div id="sparkline"></div>
+          <div class="panel skeleton-panel">
+            <h2 class="panel-title">Last 14 days</h2>
+            <div id="sparkline" class="skel-block" style="height:120px"></div>
           </div>
-          <div class="panel">
+          <div class="panel skeleton-panel">
             <h2 class="panel-title">Top topics</h2>
-            <div id="topics" class="chips"></div>
-            <h3 style="margin-top:18px">Sentiment</h3>
-            <div id="sentiment-bar" class="senti"></div>
-            <div class="row gap" style="margin-top:6px;font-size:12px;color:var(--muted)">
-              <span><span class="dot ok"></span> positive <span id="se-pos">0</span></span>
-              <span><span class="dot mu"></span> neutral <span id="se-neu">0</span></span>
-              <span><span class="dot da"></span> negative <span id="se-neg">0</span></span>
+            <div class="chips">
+              <span class="chip skel">────</span>
+              <span class="chip skel">───────</span>
+              <span class="chip skel">─────</span>
+              <span class="chip skel">────────</span>
             </div>
+            <h3 style="margin-top:18px">Sentiment</h3>
+            <div class="senti"><span class="neu" style="width:100%"></span></div>
+            <div class="hint" style="margin-top:6px">No analyses yet.</div>
           </div>
         </div>
 
-        <div class="panel">
+        <div class="panel work-panel">
           <div class="row between">
-            <h2 class="panel-title">Open action items</h2>
-            <span class="hint">Checked items are stored locally; future versions sync to Google Sheets / Notion.</span>
+            <h2 class="panel-title">Work items <span class="tag live">live</span></h2>
+            <span class="hint">Categorized by PMO. Only Now-priority items shown.</span>
           </div>
-          <ul id="actions-list" class="actions"></ul>
+          <ul id="work-items" class="work"></ul>
         </div>
 
         <div class="grid-2">
-          <div class="panel">
-            <div class="row between">
-              <h2 class="panel-title">Recent recordings</h2>
-              <a href="#/recordings" class="hint">View all →</a>
+          <div class="panel skeleton-panel">
+            <h2 class="panel-title">Recent recordings</h2>
+            <div class="list compact">
+              <div class="item skel-row"><div><div class="title skel-text">─────────</div><div class="sub skel-text">────── ──── ─</div></div><span class="badge">—</span><div>›</div></div>
+              <div class="item skel-row"><div><div class="title skel-text">────────────</div><div class="sub skel-text">────── ──── ─</div></div><span class="badge">—</span><div>›</div></div>
+              <div class="item skel-row"><div><div class="title skel-text">───────</div><div class="sub skel-text">────── ──── ─</div></div><span class="badge">—</span><div>›</div></div>
             </div>
-            <div id="recent" class="list compact"></div>
           </div>
           <div class="panel">
             <h2 class="panel-title">Connections <span class="tag">soon</span></h2>

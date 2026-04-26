@@ -1,6 +1,5 @@
 const LS_API = 'ot.api';
 const LS_TOKEN = 'ot.token';
-const LS_DONE = 'ot.done';
 
 const state = {
   apiBase: localStorage.getItem(LS_API) || location.origin,
@@ -17,10 +16,6 @@ function api(path, opts = {}) {
 }
 
 function fmtDate(ms) { return new Date(ms).toLocaleString(); }
-function fmtDateShort(ms) {
-  const d = new Date(ms);
-  return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
-}
 function fmtBytes(n) {
   if (!n) return '0 B';
   const u = ['B', 'KB', 'MB', 'GB']; let i = 0;
@@ -30,12 +25,6 @@ function fmtBytes(n) {
 function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 }
-
-const doneSet = (() => {
-  try { return new Set(JSON.parse(localStorage.getItem(LS_DONE) || '[]')); } catch { return new Set(); }
-})();
-function persistDone() { localStorage.setItem(LS_DONE, JSON.stringify([...doneSet])); }
-function actionKey(a) { return `${a.recording_id}:${a.index}`; }
 
 function mount(tplId) {
   const app = $('#app');
@@ -48,38 +37,72 @@ function setActiveNav(name) {
   $$('nav a').forEach((a) => a.classList.toggle('active', a.dataset.nav === name));
 }
 
-/* ---------- Dashboard ---------- */
+/* ---------- Dashboard (public preview) ---------- */
+
+const WORK_ITEMS = [
+  {
+    id: 'X1',
+    title: 'Google Sheets connector',
+    desc: 'OAuth + spreadsheets.values.append — append one row per action item to a tracker sheet.',
+    eta: '1 day',
+    owner: 'Backend',
+    prio: 'Now',
+    status: 'todo',
+  },
+  {
+    id: 'X2',
+    title: 'Notion connector',
+    desc: 'Integration token + pages.create — push decisions and summaries into a chosen database.',
+    eta: '0.5 day',
+    owner: 'Backend',
+    prio: 'Now',
+    status: 'todo',
+  },
+];
 
 async function routeDashboard() {
   setActiveNav('home');
   mount('tpl-home');
-
-  wireRecorder(() => loadDashboard());
-  await maybeHandleShare();
-
-  if (!state.token) {
-    $('#hero-sub').innerHTML = `Add your token in <a href="#/settings">Settings</a> to get started.`;
-    return;
-  }
-  await loadDashboard();
-  if (window._otPoll) clearInterval(window._otPoll);
-  window._otPoll = setInterval(loadDashboard, 4000);
+  renderWorkItems();
+  wirePasswordForm();
+  $('#hero-sub').textContent = 'Public preview · no real data · skeleton UI';
 }
 
-async function loadDashboard() {
-  const res = await api('/api/dashboard');
-  if (!res.ok) {
-    $('#hero-sub').textContent = `Error ${res.status}: check your token in Settings.`;
-    return;
+function renderWorkItems() {
+  const ul = $('#work-items');
+  ul.innerHTML = '';
+  for (const w of WORK_ITEMS) {
+    const li = document.createElement('li');
+    li.innerHTML = `
+      <div class="id">${w.id}</div>
+      <div class="body">
+        <div class="title">${escapeHtml(w.title)}</div>
+        <div class="desc">${escapeHtml(w.desc)}</div>
+      </div>
+      <div class="meta-row">
+        <span class="pill prio">${escapeHtml(w.prio)}</span>
+        <span class="pill eta">ETA ${escapeHtml(w.eta)}</span>
+        <span class="pill owner">${escapeHtml(w.owner)}</span>
+      </div>
+      <span class="status ${w.status}">${w.status === 'todo' ? 'To do' : w.status}</span>`;
+    ul.appendChild(li);
   }
-  const data = await res.json();
-  renderStats(data);
-  renderSparkline(data.daily);
-  renderTopics(data.top_topics);
-  renderSentiment(data.sentiment);
-  renderActions(data.action_items);
-  renderRecent(data.recent);
-  $('#hero-sub').textContent = `Synced ${new Date(data.server_time).toLocaleTimeString()}`;
+}
+
+function wirePasswordForm() {
+  const form = $('#pw-form');
+  if (!form) return;
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const v = $('#pw-input').value.trim();
+    const sub = $('#hero-sub');
+    if (!v) {
+      sub.textContent = 'Enter a test password to continue.';
+      return;
+    }
+    sub.textContent = `Test mode armed · password accepted (preview still showing skeleton — no real data wired).`;
+    $('#pw-input').value = '';
+  });
 }
 
 function renderStats(d) {
