@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <meta name="theme-color" content="#0b0b0f" />
+    <title>OT — Omni-Transcribe</title>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" href="icons/icon-192.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="dot"></span>
+        <span>OT</span>
+        <small>omni-transcribe</small>
+      </div>
+      <nav>
+        <a href="#/" data-nav="home">Dashboard</a>
+        <a href="#/recordings" data-nav="recordings">Recordings</a>
+        <a href="#/settings" data-nav="settings">Settings</a>
+      </nav>
+    </header>
+    <main id="app"><div class="empty">Loading…</div></main>
+    <script src="app.js" type="module"></script>
+  </body>
+</html>
